@@ -4,11 +4,11 @@ To automate a variety of online browser operations, Selenium uses Python as a li
 '''
 
 * Using Spoofing User Agents
-*  using Proxies 
+* Using Proxies 
 * Changing the property value of navigator for webdriver to undefined as follows:
-*  disable-blink-features
+* Disable-blink-features
 * Exclude the collection of enable-automation switches
-*  Turn-off useAutomationExtension
+* Turn-off useAutomationExtension
 
 
 ##### After reading all the articles I decided to have everything in classes so I can reuse it here is starting code which takes care of all the Point A to F 
