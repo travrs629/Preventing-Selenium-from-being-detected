@@ -53,7 +53,7 @@ class DriverOptions(object):
         self.options = Options()
         # Bypass the restrictions on the rights of each Chrome process (OS security model) that vary from trust levels, thus increasing vulnerability.
         # Starts the browser with the highest privileges.
-        self.options.add_argument('--no-sandbox')
+        # self.options.add_argument('--no-sandbox')
         # Allows the browser to open in its maximized size (default Chrome behaviour?).
         self.options.add_argument('--start-maximized')
         # Allows the browser to open in fullscreen.
@@ -62,13 +62,13 @@ class DriverOptions(object):
         # self.options.add_argument('--single-process')
         # Prevents docker with shared 64MB memory in /dev/shm to crash with Chrome, when the partition is too small in some VM environments.
         # IT is changed into /tmp.
-        self.options.add_argument('--disable-dev-shm-usage')
+        # self.options.add_argument('--disable-dev-shm-usage')
         # Presets the browser to open in incognito mode.
-        self.options.add_argument("--incognito")
+        # self.options.add_argument("--incognito")
         # Removes the info-bar of 'Chrome is controlled by automated software.' (and other automation records).
-        self.options.add_argument('--disable-blink-features')
-        self.options.add_argument(
-            '--disable-blink-features=AutomationControlled')
+        # self.options.add_argument('--disable-blink-features')
+        # self.options.add_argument(
+        #     '--disable-blink-features=AutomationControlled')
         # However, this enables the info bar of "Chrome is being controlled by automatedtest software".
         self.options.add_experimental_option(
             "excludeSwitches", ["enable-automation"])
@@ -76,10 +76,12 @@ class DriverOptions(object):
         # Disables pop-ups like  "Disable developer mode extensions" as well.
         self.options.add_experimental_option('useAutomationExtension', False)
         # Removes the info-bar of "Chrome is being controlled by automated test software", but it seems to be depreciated.
-        # self.options.add_argument('disable-infobars')
+        self.options.add_argument('disable-infobars')
         # Suppresses the 'Could not read device interface GUIDs: The system cannot find the file specified.' and 'Failed to read descriptor from node connection: A device attached to the system is not functioning.' messages.
         self.options.add_experimental_option(
             "excludeSwitches", ["enable-logging"])
+
+        self.options.add_experimental_option('detach', True)
 
         # Creates the object of Spoofer.
         self.helperSpoofer = Spoofer()
@@ -106,7 +108,7 @@ class WebDriver(DriverOptions):
 
         IP = self.helperSpoofer.ip
         # Modify the proxy for Crome in Python WebDriver.
-        self.proxy = {
+        webdriver.DesiredCapabilities.CHROME['proxy'] = {
             "httpProxy": IP,
             "ftpProxy": IP,
             "sslProxy": IP,
@@ -136,7 +138,7 @@ def main():
 
     driver = WebDriver()
     driverinstance = driver.driver_instance
-    # https://bot.sannysoft.com also seems to be a good option.
+    # https://bot.sannysoft.com also seems to be a good option. 
     driverinstance.get("https://www.expressvpn.com/what-is-my-ip")
     time.sleep(5)
     user_agent_check = driverinstance.execute_script(
